@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import ContainerOfToDos from './components/ContainerOfToDos'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PageWrapper>
+      <h1 className='title' >
+        todos
+      </h1>
+      <ContainerOfToDos />
+    </PageWrapper>
   );
 }
 
-export default App;
+const PageWrapper = styled.div`
+  background-color:  ${({ theme }) => theme.colors.background};
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height:100vh;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    color: ${({ theme }) => theme.colors.primary};
+    margin-top: 40px;
+    font-size: 120px;
+    width: 100%;
+
+    @media screen and (max-width: 390px){
+      font-size: 80px;
+    }
+  }
+`
