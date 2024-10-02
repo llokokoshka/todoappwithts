@@ -1,5 +1,6 @@
+import { IbaseTheme } from "./styled"
 
-export const baseTheme = {
+export const baseTheme:IbaseTheme = {
     colors: {
       background: '#f5f5f5',
       primary: '#b83f45',
