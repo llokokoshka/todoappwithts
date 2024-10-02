@@ -44,7 +44,9 @@ const ToDoForm = () => {
         onClick={handleToggleAllToDosCompletion}
       >✔</div>
       <input
-        className='todo-input__field' type='text' value={todoValue}
+        className='todo-input__field' 
+        type='text' 
+        value={todoValue}
         onChange={changeTodoValue}
         onFocus={handleFocus}
         onBlur={handleBlur}

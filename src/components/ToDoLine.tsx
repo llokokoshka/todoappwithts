@@ -64,7 +64,10 @@ const ToDoLine: React.FC<Props> = (props) => {
           />
         ) : (
           <>
-            <div className='todo-body__div-button' onDoubleClick={changeIsEdit}>
+            <div
+              className='todo-body__div-button'
+              onDoubleClick={changeIsEdit}
+            >
               <div
                 className={cn('todo-body__div', {
                   completed: (props.todo.isCompleted),
@@ -72,9 +75,13 @@ const ToDoLine: React.FC<Props> = (props) => {
                 onDoubleClick={changeIsEdit}>
                 {props.todo.value}
               </div>
-              <button className='closed-button' onClick={handleDeleteToDo}>X</button>
+              <button
+                className='closed-button'
+                onClick={handleDeleteToDo}
+              >
+                X
+              </button>
             </div>
-
           </>
         )
         }
