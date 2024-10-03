@@ -174,6 +174,7 @@ const ToDoLineBody = styled.li`
     display: flex;
     text-align: left;
     word-wrap: break-word;
+    word-break: break-all;
     white-space: normal;
     overflow-wrap: break-word;
     max-width: 100%;
