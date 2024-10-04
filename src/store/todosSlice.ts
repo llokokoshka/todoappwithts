@@ -37,7 +37,6 @@ const todosSlice = createSlice({
         if (id === todo.id) {
           todo.value = newValue;
         }
-        console.log(todo.value);
       })
        
     },

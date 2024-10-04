@@ -17,26 +17,15 @@ export default function TodosPage() {
   const location = useLocation();
   const data = location.state?.data;
   const [editValue, setEditValue] = useState<string>(data.value);
-  // const a = useAppSelector((state: RootState) => state.todos.todos)
-  // console.log('a = '+a);
-  // let b:Array<object>;
-  // a.forEach((todo) => {
-  //     if (data.id === todo.id) {
-  //         b.push(todo);
-  //         console.log('b = '+b);
-  //         return todo;
-
-  //     }
-  // }
-  // )
-  // console.log(b);
+  const todosArray= useAppSelector((state: RootState) => state.todos.todos);
+  const todoFromState = todosArray.find(todo=>data.id === todo.id);
 
   const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return;
     }
 
-    dispatch(updateToDo({ id: data.id, newValue: editValue }));
+    dispatch(updateToDo({ id: todoFromState!.id, newValue: editValue }));
     setIsEdit(false);
   }
 
