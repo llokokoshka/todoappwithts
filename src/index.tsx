@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './routes/App';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import GlobalStyles from './styles/global'
@@ -24,7 +24,6 @@ if (rootElem) {
   const root = ReactDOM.createRoot(rootElem);
   root.render(
     <React.StrictMode>
-
       <ThemeProvider theme={baseTheme}>
         <Provider store={store}>
           <GlobalStyles />

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ContainerOfToDos from './components/ContainerOfToDos'
+import ContainerOfToDos from '../components/ContainerOfToDos'
 
 export default function App() {
   return (
