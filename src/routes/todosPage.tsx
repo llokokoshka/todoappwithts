@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAppDispatch } from '../hooks';
 import { updateToDo, deleteToDo } from '../store/todosSlice';
@@ -12,7 +12,7 @@ import { RootState } from '../store/index';
 
 export default function TodosPage() {
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const location = useLocation();
   const data = location.state?.data;
@@ -42,6 +42,7 @@ export default function TodosPage() {
 
   const handleDeleteToDo = () => {
     dispatch(deleteToDo({ id: data.id }));
+    navigate(`/`)
   }
 
   function changeIsEdit() {
@@ -51,6 +52,7 @@ export default function TodosPage() {
   const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
   }
+
   return (
     <BodyWrapper>
       <div className='main-container'>
@@ -89,7 +91,7 @@ export default function TodosPage() {
         </div>
 
         <textarea></textarea>
-        <button className='button-style'>Back</button>
+        <button className='button-style' onClick={()=>{navigate(`/`)}}>Back</button>
       </div>
     </BodyWrapper>
   )
