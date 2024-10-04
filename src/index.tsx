@@ -10,6 +10,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import TodosPage from './routes/todosPage';
 
 const rootElem = document.getElementById('root');
 
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
   },
+  {
+    path: "todo/:id",
+    element: <TodosPage />,
+    // action: todoAction,
+  }
 ]);
 
 if (rootElem) {

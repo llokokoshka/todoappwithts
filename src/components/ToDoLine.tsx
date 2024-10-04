@@ -5,6 +5,7 @@ import { useAppDispatch } from '../hooks';
 import { updateToDo, toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
 import { Todo } from '../interfaces';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   todo: Todo;
@@ -40,6 +41,9 @@ const ToDoLine: React.FC<Props> = (props) => {
   const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
   }
+  const navigate = useNavigate()
+
+  const redirectToPageWithTodo = ()=>{navigate(`todo/${props.todo.id}`, {state:{data: props.todo}})}
 
   return (
     <ToDoLineBody>
@@ -67,6 +71,7 @@ const ToDoLine: React.FC<Props> = (props) => {
             <div
               className='todo-body__div-button'
               onDoubleClick={changeIsEdit}
+              onClick={redirectToPageWithTodo}
             >
               <div
                 className={cn('todo-body__div', {
@@ -123,6 +128,7 @@ const ToDoLineBody = styled.li`
     justify-content: start;
     align-items: center;
     column-gap: 10px;
+    cursor: pointer;
     padding: 0 ${({ theme }) => theme.padding.large};
     width: 100%;
     height: 100%;
@@ -191,6 +197,9 @@ const ToDoLineBody = styled.li`
     justify-content: space-between;
     width: 100%;
     align-items: center;
+  }
+  .linkk{
+    cursor: pointer;
   }
 
 `

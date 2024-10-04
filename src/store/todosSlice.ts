@@ -32,11 +32,14 @@ const todosSlice = createSlice({
 
     updateToDo: (state, action: PayloadAction<{ id: number, newValue: string, }>) => {
       const { id, newValue } = action.payload;
+     
       state.todos.forEach((todo) => {
         if (id === todo.id) {
           todo.value = newValue;
         }
+        console.log(todo.value);
       })
+       
     },
 
     toggleToDoComplete: (state, action: PayloadAction<Todo>) => {
