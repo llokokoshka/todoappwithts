@@ -1,36 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
 import { updateToDo, deleteToDo, updateDescription } from '../store/todosSlice';
 import cn from 'classnames';
-
+import { RootState } from '../store/index';
+import { useAppSelector } from '../hooks';
+import { Todo } from '../interfaces';
 
 export default function TodosPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isEdit, setIsEdit] = useState(false);
-
   const location = useLocation();
-  const data = location.state?.data;
-  const [editValue, setEditValue] = useState<string>(data.value);
-  const [description, setDescription] = useState<string>(data.description);
+  const todos: Todo = location.state?.data;
+
+  const getTodos = useAppSelector((state: RootState) => state.todos.todos);
+  const changindTodo = getTodos.find((todo) => todo.id === todos.id);
+
+  useEffect(() => {
+    if (!changindTodo) {
+      navigate(`/`);
+    }
+  });
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [editValue, setEditValue] = useState<string>(changindTodo?.value || '');
+  const [description, setDescription] = useState<string>(changindTodo?.description || '');
 
   const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return;
     }
 
-    dispatch(updateToDo({ id: data!.id, newValue: editValue }));
+    dispatch(updateToDo({ id: changindTodo!.id, newValue: editValue }));
     setIsEdit(false);
   }
+
   const handleUpdateDescription = () => {
-    dispatch(updateDescription({ id: data!.id, newValue: description }));
+    dispatch(updateDescription({ id: changindTodo!.id, newValue: description }));
   }
 
   const handleDeleteToDo = () => {
-    dispatch(deleteToDo({ id: data!.id }));
+    dispatch(deleteToDo({ id: changindTodo!.id }));
     navigate(`/`)
   }
 
@@ -41,8 +53,14 @@ export default function TodosPage() {
   const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
   }
+
   const changeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
+  }
+
+  const resetDescription = () => {
+    setDescription('');
+    dispatch(updateDescription({ id: changindTodo!.id, newValue: '' }));
   }
 
   return (
@@ -51,7 +69,7 @@ export default function TodosPage() {
         {isEdit ? (
           <input
             autoFocus
-            className='todo-body__update-input reset'
+            className='main-container__update-input reset'
             type='text'
             value={editValue}
             onChange={changeEditValue}
@@ -61,34 +79,33 @@ export default function TodosPage() {
         ) : (
           <>
             <div
-              className='todo-body__div-button'
-              onDoubleClick={changeIsEdit}
-            >
-              <div
-                className={cn('todo-body__div', {
-                  completed: (data!.isCompleted),
-                })}
-                onDoubleClick={changeIsEdit}>
-                {editValue}
-              </div>
+              className={cn('main-container__todo', {
+                completed: (changindTodo?.isCompleted),
+              })}
+              onDoubleClick={changeIsEdit}>
+              {editValue}
             </div>
           </>
         )
         }
-        <div className='button-div'>
-          <button className='button-style' onClick={changeIsEdit}>Edit</button>
-          <button className='button-style'
+        <div className='main-container__button-div'>
+          <button className='button-div__button-style' onClick={changeIsEdit}>Edit</button>
+          <button className='button-div__button-style'
             onClick={handleDeleteToDo}
           >Delete</button>
         </div>
 
         <textarea
+          className=''
           value={description}
           onChange={changeDescription}
         >
         </textarea>
-        <button className='button-style' onClick={handleUpdateDescription}>  Save </button>
-        <button className='button-style' onClick={() => { navigate(`/`) }}>Back</button>
+        <div className='main-container__button-div'>
+          <button className='button-div__button-style' onClick={resetDescription}>Reset</button>
+          <button className='button-div__button-style' onClick={handleUpdateDescription}>Save</button>
+        </div>
+        <button className='button-div__button-style' onClick={() => { navigate(`/`) }}>Back</button>
       </div>
     </BodyWrapper>
   )
@@ -112,43 +129,43 @@ const BodyWrapper = styled.div`
     max-width: 550px;
   }
 
-  .button-div{
-    display: flex;
-    column-gap: 20px;
-  }
-
-  .button-style{
-      width: 100px;
-      height: 50px;
-      background-color: ${({ theme }) => theme.colors.light_pink};
-  }
-
-  .button-style:hover{
-    cursor: pointer;
-  }
-
-  .reset{
-    appearance: none;
-
-  }
-
-  .todo-body__update-input{
-    width: ${({ theme }) => theme.sizes.shirt_dectop};
-    height: 39px;
-  }
-
-  .todo-body__update-input:focus {
-    outline: none;
-    border:  ${({ theme }) => theme.border.red};
-  }
-
-  .todo-body__div{
+  .main-container__todo{
     display: flex;
     align-items: center;
     word-wrap: break-word;
     word-break: break-all;
     white-space: normal;
     overflow-wrap: break-word;
+    border: 2px ${({ theme }) => theme.colors.primary};
+  }
+
+  .main-container__button-div{
+    display: flex;
+    column-gap: 20px;
+  }
+
+  .button-div__button-style{
+      width: 100px;
+      height: 50px;
+      background-color: ${({ theme }) => theme.colors.light_pink};
+  }
+
+  .button-div__button-style:hover{
+    cursor: pointer;
+  }
+
+  .reset{
+    appearance: none;
+  }
+
+  .main-container__update-input{
+    width: ${({ theme }) => theme.sizes.shirt_dectop};
+    height: 39px;
+  }
+
+  .main-container__update-input:focus {
+    outline: none;
+    border:  ${({ theme }) => theme.border.red};
   }
 
 `
