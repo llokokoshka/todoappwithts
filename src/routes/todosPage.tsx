@@ -90,10 +90,18 @@ export default function TodosPage() {
           )
           }
           <div className='main-container__button-div'>
-            <button className='button-div__button-style' onClick={changeIsEdit}>Edit</button>
-            <button className='button-div__button-style'
+            <button
+              className='button-div__button-style'
+              onClick={changeIsEdit}
+            >
+              Edit
+            </button>
+            <button
+              className='button-div__button-style'
               onClick={handleDeleteToDo}
-            >Delete</button>
+            >
+              Delete
+            </button>
           </div>
         </div>
         <div className='main-container__mini-block'>
@@ -105,11 +113,26 @@ export default function TodosPage() {
           >
           </textarea>
           <div className='main-container__button-div'>
-            <button className='button-div__button-style' onClick={resetDescription}>Reset</button>
-            <button className='button-div__button-style' onClick={handleUpdateDescription}>Save</button>
+            <button
+              className='button-div__button-style'
+              onClick={resetDescription}
+            >
+              Reset
+            </button>
+            <button
+              className='button-div__button-style'
+              onClick={handleUpdateDescription}
+            >
+              Save
+            </button>
           </div>
         </div>
-        <button className='button-div__button-style' onClick={() => { navigate(`/`) }}>Back</button>
+        <button
+          className='button-div__button-style'
+          onClick={() => { navigate(`/`) }}
+        >
+          Back
+        </button>
       </div>
     </BodyWrapper>
   )
@@ -133,6 +156,7 @@ const BodyWrapper = styled.div`
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
   }
+  
   .main-container__mini-block{
     display: flex;
     flex-direction: column;
@@ -163,7 +187,6 @@ const BodyWrapper = styled.div`
       height: 50px;
       background-color: ${({ theme }) => theme.colors.light_pink};
       border-radius: 5px;
-      /* box-shadow:  2px 1px 5px 1px rgba(0, 0, 0, 0.20); */
   }
 
   .button-div__button-style:hover{
@@ -175,7 +198,6 @@ const BodyWrapper = styled.div`
   .reset{
     appearance: none;
   }
-
 
   .main-container__update-input{
     width: ${({ theme }) => theme.sizes.shirt_dectop};
