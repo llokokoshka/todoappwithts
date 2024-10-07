@@ -3,7 +3,6 @@ import { RootState } from './index';
 
 const getTodos = (state: RootState) => state.todos.todos;
 const getFilter = (state: RootState, ) => state.todos.filter;
-const getId = (state: RootState, id: number) => id;
 
 export const getFilteredToDos = createSelector([getTodos, getFilter],
     (getTodos, getFilter) => {

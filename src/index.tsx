@@ -5,9 +5,7 @@ import { Provider } from 'react-redux';
 import GlobalStyles from './styles/global'
 import { ThemeProvider } from 'styled-components';
 import { baseTheme } from './styles/theme';
-import {
-  RouterProvider,
-} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import router from './routes/routes';
 
 const rootElem = document.getElementById('root');

@@ -1,24 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
 import { updateToDo, deleteToDo, updateDescription } from '../store/todosSlice';
 import cn from 'classnames';
 import { RootState } from '../store/index';
 import { useAppSelector } from '../hooks';
-import { Todo } from '../interfaces';
+import {changingTodo} from '../store/changingTodo'
 
 export default function TodosPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  let { userId } = useParams();
-  const todos: Todo = location.state?.data;
-
-  const getTodos = useAppSelector((state: RootState) => state.todos.todos);
-  const changindTodo = getTodos.find((todo) => todo.id === todos.id);
-
+  let { id } = useParams();
+  const todoId = Number(id);
+  const changindTodo = useAppSelector((state:RootState) => changingTodo(state, todoId));
+  
   useEffect(() => {
     if (!changindTodo) {
       navigate(`/`);
@@ -128,12 +125,12 @@ export default function TodosPage() {
             </button>
           </div>
         </div>
-        <button
+        <Link
           className='button-div__button-style'
-          onClick={() => { navigate(`/`) }}
+          to={`/`}
         >
           Back
-        </button>
+        </Link>
       </div>
     </BodyWrapper>
   )
@@ -146,6 +143,11 @@ const BodyWrapper = styled.div`
   padding-top: 155px;
   background-color: ${({ theme }) => theme.colors.background};
   min-height:100vh;
+
+  .link{
+    appearance: none;
+    text-decoration: none;
+  }
 
   .main-container{
     display: flex;
@@ -192,10 +194,19 @@ const BodyWrapper = styled.div`
   }
 
   .button-div__button-style{
-      width: 100px;
-      height: 50px;
-      background-color: ${({ theme }) => theme.colors.light_pink};
-      border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    appearance: none;
+    color: black;
+    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    width: 100px;
+    height: 50px;
+    background-color: ${({ theme }) => theme.colors.light_pink};
+    border-radius: 5px;
   }
 
   .button-div__button-style:hover{

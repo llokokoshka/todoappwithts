@@ -4,7 +4,7 @@ import { useAppDispatch } from '../hooks';
 import { toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
 import { Todo } from '../interfaces';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type Props = {
   todo: Todo;
@@ -21,12 +21,6 @@ const ToDoLine: React.FC<Props> = (props) => {
     dispatch(deleteToDo({ id: props.todo.id }));
   }
 
-  const navigate = useNavigate()
-
-  const redirectToPageWithTodo = () => {
-    navigate(`todo/${props.todo.id}`)
-  }
-
   return (
     <ToDoLineBody>
       <div className={cn('todo-body')} >
@@ -38,9 +32,9 @@ const ToDoLine: React.FC<Props> = (props) => {
           onChange={handleToggleToDoComplete}
         />
         <>
-          <div
+          <Link
             className='todo-body__div-button'
-            onClick={redirectToPageWithTodo}
+            to={`todo/${props.todo.id}`}
           >
             <div
               className={cn('todo-body__div', {
@@ -55,7 +49,7 @@ const ToDoLine: React.FC<Props> = (props) => {
             >
               X
             </button>
-          </div>
+          </Link>
         </>
       </div>
     </ToDoLineBody>
@@ -75,6 +69,11 @@ const ToDoLineBody = styled.li`
   width: 100%;
   height: 100%;
   border:  ${({ theme }) => theme.border.grey};;
+
+  Link{
+    appearance: none;
+    text-decoration: none;
+  }
 
   .closed-button{
     opacity: 0;
@@ -143,6 +142,13 @@ const ToDoLineBody = styled.li`
   }
 
   .todo-body__div-button{
+    display: flex;
+    text-decoration: none;
+    appearance: none;
+    color: black;
+    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 14px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
