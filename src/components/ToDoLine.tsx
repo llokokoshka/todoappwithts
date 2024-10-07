@@ -14,17 +14,17 @@ type Props = {
 const ToDoLine: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
-  const [editValue, setEditValue] = useState<string>(props.todo.value);
+  // const [editValue, setEditValue] = useState<string>(props.todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== 'Enter') {
-      return;
-    }
+  // const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key !== 'Enter') {
+  //     return;
+  //   }
 
-    dispatch(updateToDo({ id: props.todo.id, newValue: editValue }));
-    setIsEdit(false);
-  }
+  //   dispatch(updateToDo({ id: props.todo.id, newValue: editValue }));
+  //   setIsEdit(false);
+  // }
 
   const handleToggleToDoComplete = () => {
     dispatch(toggleToDoComplete(props.todo));
@@ -38,12 +38,14 @@ const ToDoLine: React.FC<Props> = (props) => {
     setIsEdit(!isEdit);
   }
 
-  const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditValue(e.target.value)
-  }
+  // const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEditValue(e.target.value)
+  // }
   const navigate = useNavigate()
 
-  const redirectToPageWithTodo = ()=>{navigate(`todo/${props.todo.id}`, {state:{data: props.todo}})}
+  const redirectToPageWithTodo = ()=>{
+    navigate(`todo/${props.todo.id}`, {state:{data: props.todo}})
+  }
 
   return (
     <ToDoLineBody>
@@ -56,7 +58,7 @@ const ToDoLine: React.FC<Props> = (props) => {
           checked={props.todo.isCompleted}
           onChange={handleToggleToDoComplete}
         />
-        {isEdit ? (
+        {/* {isEdit ? (
           <input
             autoFocus
             className='todo-body__update-input reset'
@@ -66,11 +68,11 @@ const ToDoLine: React.FC<Props> = (props) => {
             onKeyDown={handleUpdateToDo}
             onBlur={changeIsEdit}
           />
-        ) : (
+        ) : ( */}
           <>
             <div
               className='todo-body__div-button'
-              onDoubleClick={changeIsEdit}
+              // onDoubleClick={changeIsEdit}
               onClick={redirectToPageWithTodo}
             >
               <div
@@ -88,8 +90,8 @@ const ToDoLine: React.FC<Props> = (props) => {
               </button>
             </div>
           </>
-        )
-        }
+        {/* ) */}
+        {/* } */}
       </div>
     </ToDoLineBody>
   )

@@ -5,32 +5,28 @@ import { useState } from 'react';
 import { useAppDispatch } from '../hooks';
 import { updateToDo, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
-import { useAppSelector } from '../hooks';
-import { RootState } from '../store/index';
-
 
 
 export default function TodosPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
+
   const location = useLocation();
   const data = location.state?.data;
   const [editValue, setEditValue] = useState<string>(data.value);
-  const todosArray= useAppSelector((state: RootState) => state.todos.todos);
-  const todoFromState = todosArray.find(todo=>data.id === todo.id);
 
   const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
       return;
     }
 
-    dispatch(updateToDo({ id: todoFromState!.id, newValue: editValue }));
+    dispatch(updateToDo({ id: data!.id, newValue: editValue }));
     setIsEdit(false);
   }
 
   const handleDeleteToDo = () => {
-    dispatch(deleteToDo({ id: data.id }));
+    dispatch(deleteToDo({ id: data!.id }));
     navigate(`/`)
   }
 
@@ -63,10 +59,10 @@ export default function TodosPage() {
             >
               <div
                 className={cn('todo-body__div', {
-                  completed: (data.isCompleted),
+                  completed: (data!.isCompleted),
                 })}
                 onDoubleClick={changeIsEdit}>
-                {data.value}
+                {editValue}
               </div>
             </div>
           </>
@@ -133,13 +129,10 @@ const BodyWrapper = styled.div`
   .todo-body__div{
     display: flex;
     align-items: center;
-    /* text-align: left; */
     word-wrap: break-word;
     word-break: break-all;
     white-space: normal;
     overflow-wrap: break-word;
-    /* max-width: 100%;
-    max-height: 100%; */
   }
 
 `
