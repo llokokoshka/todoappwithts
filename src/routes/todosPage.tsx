@@ -99,6 +99,7 @@ export default function TodosPage() {
         <div className='main-container__mini-block'>
           <textarea
             className='main-container__textarea'
+            placeholder='Add description'
             value={description}
             onChange={changeDescription}
           >
@@ -136,7 +137,7 @@ const BodyWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 20px;
+    row-gap: 15px;
   }
 
   .main-container__todo{
@@ -147,7 +148,8 @@ const BodyWrapper = styled.div`
     white-space: normal;
     overflow-wrap: break-word;
     padding-left: 7px;
-    width: ${({ theme }) => theme.sizes.shirt_dectop};    min-height: 39px;
+    width: ${({ theme }) => theme.sizes.shirt_dectop};   
+     min-height: 39px;
     border: ${({ theme }) => theme.border.grey} ;
   }
 
@@ -160,10 +162,14 @@ const BodyWrapper = styled.div`
       width: 100px;
       height: 50px;
       background-color: ${({ theme }) => theme.colors.light_pink};
+      border-radius: 5px;
+      /* box-shadow:  2px 1px 5px 1px rgba(0, 0, 0, 0.20); */
   }
 
   .button-div__button-style:hover{
     cursor: pointer;
+    border:  ${({ theme }) => theme.border.red};
+    text-decoration: underline;
   }
 
   .reset{
