@@ -66,50 +66,54 @@ export default function TodosPage() {
   return (
     <BodyWrapper>
       <div className='main-container'>
-        {isEdit ? (
-          <input
-            autoFocus
-            className='main-container__update-input reset'
-            type='text'
-            value={editValue}
-            onChange={changeEditValue}
-            onKeyDown={handleUpdateToDo}
-            onBlur={changeIsEdit}
-          />
-        ) : (
-          <>
-            <div
-              className={cn('main-container__todo', {
-                completed: (changindTodo?.isCompleted),
-              })}
-              onDoubleClick={changeIsEdit}>
-              {editValue}
-            </div>
-          </>
-        )
-        }
-        <div className='main-container__button-div'>
-          <button className='button-div__button-style' onClick={changeIsEdit}>Edit</button>
-          <button className='button-div__button-style'
-            onClick={handleDeleteToDo}
-          >Delete</button>
+        <div className='main-container__mini-block'>
+          {isEdit ? (
+            <input
+              autoFocus
+              className='main-container__update-input reset'
+              type='text'
+              value={editValue}
+              onChange={changeEditValue}
+              onKeyDown={handleUpdateToDo}
+              onBlur={changeIsEdit}
+            />
+          ) : (
+            <>
+              <div
+                className={cn('main-container__todo', {
+                  completed: (changindTodo?.isCompleted),
+                })}
+                onDoubleClick={changeIsEdit}>
+                {editValue}
+              </div>
+            </>
+          )
+          }
+          <div className='main-container__button-div'>
+            <button className='button-div__button-style' onClick={changeIsEdit}>Edit</button>
+            <button className='button-div__button-style'
+              onClick={handleDeleteToDo}
+            >Delete</button>
+          </div>
         </div>
-
-        <textarea
-          className=''
-          value={description}
-          onChange={changeDescription}
-        >
-        </textarea>
-        <div className='main-container__button-div'>
-          <button className='button-div__button-style' onClick={resetDescription}>Reset</button>
-          <button className='button-div__button-style' onClick={handleUpdateDescription}>Save</button>
+        <div className='main-container__mini-block'>
+          <textarea
+            className='main-container__textarea'
+            value={description}
+            onChange={changeDescription}
+          >
+          </textarea>
+          <div className='main-container__button-div'>
+            <button className='button-div__button-style' onClick={resetDescription}>Reset</button>
+            <button className='button-div__button-style' onClick={handleUpdateDescription}>Save</button>
+          </div>
         </div>
         <button className='button-div__button-style' onClick={() => { navigate(`/`) }}>Back</button>
       </div>
     </BodyWrapper>
   )
 }
+
 const BodyWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -128,6 +132,12 @@ const BodyWrapper = styled.div`
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
   }
+  .main-container__mini-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
 
   .main-container__todo{
     display: flex;
@@ -136,7 +146,9 @@ const BodyWrapper = styled.div`
     word-break: break-all;
     white-space: normal;
     overflow-wrap: break-word;
-    border: 2px ${({ theme }) => theme.colors.primary};
+    padding-left: 7px;
+    width: ${({ theme }) => theme.sizes.shirt_dectop};    min-height: 39px;
+    border: ${({ theme }) => theme.border.grey} ;
   }
 
   .main-container__button-div{
@@ -158,12 +170,27 @@ const BodyWrapper = styled.div`
     appearance: none;
   }
 
+
   .main-container__update-input{
     width: ${({ theme }) => theme.sizes.shirt_dectop};
     height: 39px;
+    padding-left: 7px;
+
   }
 
   .main-container__update-input:focus {
+    outline: none;
+    border:  ${({ theme }) => theme.border.red};
+  }
+
+  .main-container__textarea{
+    border: ${({ theme }) => theme.border.grey} ;
+    min-width: 300px;
+    min-height: 100px;
+    padding: 7px;
+    resize: none;
+  }
+  .main-container__textarea:focus{
     outline: none;
     border:  ${({ theme }) => theme.border.red};
   }
