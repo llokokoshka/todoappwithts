@@ -102,19 +102,6 @@ const ToDoLineBody = styled.li`
     max-width: ${({ theme }) => theme.sizes.desctop};
   }
 
-  .reset{
-    appearance: none;
-
-  }
-  .todo-body__update-input{
-    width: ${({ theme }) => theme.sizes.shirt_dectop};
-    height: 39px;
-  }
-  .todo-body__update-input:focus {
-    outline: none;
-    border:  ${({ theme }) => theme.border.red};
-  }
-
   .todo-body__checkbox{
     appearance: none;
     -webkit-appearance: none;
@@ -140,9 +127,6 @@ const ToDoLineBody = styled.li`
     transform: scale(1.5);
   }
 
-  .hippen{
-    opacity: 0;
-  }
   .todo-body__div{
     display: flex;
     text-align: left;
@@ -164,9 +148,6 @@ const ToDoLineBody = styled.li`
     justify-content: space-between;
     width: 100%;
     align-items: center;
-  }
-  .linkk{
-    cursor: pointer;
   }
 
 `
