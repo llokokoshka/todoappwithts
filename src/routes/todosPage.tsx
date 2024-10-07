@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAppDispatch } from '../hooks';
-import { updateToDo, deleteToDo } from '../store/todosSlice';
+import { updateToDo, deleteToDo, updateDescription } from '../store/todosSlice';
 import cn from 'classnames';
 
 
@@ -15,6 +15,7 @@ export default function TodosPage() {
   const location = useLocation();
   const data = location.state?.data;
   const [editValue, setEditValue] = useState<string>(data.value);
+  const [description, setDescription] = useState<string>(data.description);
 
   const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') {
@@ -23,6 +24,9 @@ export default function TodosPage() {
 
     dispatch(updateToDo({ id: data!.id, newValue: editValue }));
     setIsEdit(false);
+  }
+  const handleUpdateDescription = () => {
+    dispatch(updateDescription({ id: data!.id, newValue: description }));
   }
 
   const handleDeleteToDo = () => {
@@ -36,6 +40,9 @@ export default function TodosPage() {
 
   const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
+  }
+  const changeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
   }
 
   return (
@@ -69,14 +76,19 @@ export default function TodosPage() {
         )
         }
         <div className='button-div'>
-          <button className='button-style'>Edit</button>
+          <button className='button-style' onClick={changeIsEdit}>Edit</button>
           <button className='button-style'
             onClick={handleDeleteToDo}
           >Delete</button>
         </div>
 
-        <textarea></textarea>
-        <button className='button-style' onClick={()=>{navigate(`/`)}}>Back</button>
+        <textarea
+          value={description}
+          onChange={changeDescription}
+        >
+        </textarea>
+        <button className='button-style' onClick={handleUpdateDescription}>  Save </button>
+        <button className='button-style' onClick={() => { navigate(`/`) }}>Back</button>
       </div>
     </BodyWrapper>
   )
@@ -105,11 +117,15 @@ const BodyWrapper = styled.div`
     column-gap: 20px;
   }
 
-    .button-style{
-        width: 100px;
-        height: 50px;
-        background-color: ${({ theme }) => theme.colors.light_pink};
-    }
+  .button-style{
+      width: 100px;
+      height: 50px;
+      background-color: ${({ theme }) => theme.colors.light_pink};
+  }
+
+  .button-style:hover{
+    cursor: pointer;
+  }
 
   .reset{
     appearance: none;

@@ -21,11 +21,12 @@ const todosSlice = createSlice({
           }
         }
       },
-      reducer(state, action: PayloadAction<{ id: number, value: string }>) {
+      reducer(state, action: PayloadAction<{ id: number, value: string}>) {
         state.todos.push({
           id: action.payload.id,
           value: action.payload.value,
           isCompleted: false,
+          description: '',
         },);
       }
     },
@@ -36,6 +37,17 @@ const todosSlice = createSlice({
       state.todos.forEach((todo) => {
         if (id === todo.id) {
           todo.value = newValue;
+        }
+      })
+       
+    },
+
+    updateDescription: (state, action: PayloadAction<{ id: number, newValue: string, }>) => {
+      const { id, newValue } = action.payload;
+     
+      state.todos.forEach((todo) => {
+        if (id === todo.id) {
+          todo.description = newValue;
         }
       })
        
@@ -73,6 +85,7 @@ const todosSlice = createSlice({
 export const {
   addTodo,
   updateToDo,
+  updateDescription,
   toggleToDoComplete,
   deleteToDo,
   clearAllCompletedToDos,

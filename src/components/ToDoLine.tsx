@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useAppDispatch } from '../hooks';
-import { updateToDo, toggleToDoComplete, deleteToDo } from '../store/todosSlice';
+import { toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
 import { Todo } from '../interfaces';
 import { useNavigate } from 'react-router-dom';
@@ -13,18 +13,8 @@ type Props = {
 
 const ToDoLine: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
-
-  // const [editValue, setEditValue] = useState<string>(props.todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
-  // const handleUpdateToDo = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key !== 'Enter') {
-  //     return;
-  //   }
-
-  //   dispatch(updateToDo({ id: props.todo.id, newValue: editValue }));
-  //   setIsEdit(false);
-  // }
 
   const handleToggleToDoComplete = () => {
     dispatch(toggleToDoComplete(props.todo));
@@ -38,13 +28,10 @@ const ToDoLine: React.FC<Props> = (props) => {
     setIsEdit(!isEdit);
   }
 
-  // const changeEditValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setEditValue(e.target.value)
-  // }
   const navigate = useNavigate()
 
-  const redirectToPageWithTodo = ()=>{
-    navigate(`todo/${props.todo.id}`, {state:{data: props.todo}})
+  const redirectToPageWithTodo = () => {
+    navigate(`todo/${props.todo.id}`, { state: { data: props.todo } })
   }
 
   return (
@@ -58,40 +45,27 @@ const ToDoLine: React.FC<Props> = (props) => {
           checked={props.todo.isCompleted}
           onChange={handleToggleToDoComplete}
         />
-        {/* {isEdit ? (
-          <input
-            autoFocus
-            className='todo-body__update-input reset'
-            type='text'
-            value={editValue}
-            onChange={changeEditValue}
-            onKeyDown={handleUpdateToDo}
-            onBlur={changeIsEdit}
-          />
-        ) : ( */}
-          <>
+        <>
+          <div
+            className='todo-body__div-button'
+            // onDoubleClick={changeIsEdit}
+            onClick={redirectToPageWithTodo}
+          >
             <div
-              className='todo-body__div-button'
-              // onDoubleClick={changeIsEdit}
-              onClick={redirectToPageWithTodo}
-            >
-              <div
-                className={cn('todo-body__div', {
-                  completed: (props.todo.isCompleted),
-                })}
-                onDoubleClick={changeIsEdit}>
-                {props.todo.value}
-              </div>
-              <button
-                className='closed-button'
-                onClick={handleDeleteToDo}
-              >
-                X
-              </button>
+              className={cn('todo-body__div', {
+                completed: (props.todo.isCompleted),
+              })}
+              onDoubleClick={changeIsEdit}>
+              {props.todo.value}
             </div>
-          </>
-        {/* ) */}
-        {/* } */}
+            <button
+              className='closed-button'
+              onClick={handleDeleteToDo}
+            >
+              X
+            </button>
+          </div>
+        </>
       </div>
     </ToDoLineBody>
   )
