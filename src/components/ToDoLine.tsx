@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
 import { useAppDispatch } from '../hooks';
 import { toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
@@ -13,8 +12,6 @@ type Props = {
 
 const ToDoLine: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
-  const [isEdit, setIsEdit] = useState(false);
-
 
   const handleToggleToDoComplete = () => {
     dispatch(toggleToDoComplete(props.todo));
@@ -22,10 +19,6 @@ const ToDoLine: React.FC<Props> = (props) => {
 
   const handleDeleteToDo = () => {
     dispatch(deleteToDo({ id: props.todo.id }));
-  }
-
-  function changeIsEdit() {
-    setIsEdit(!isEdit);
   }
 
   const navigate = useNavigate()
@@ -36,10 +29,9 @@ const ToDoLine: React.FC<Props> = (props) => {
 
   return (
     <ToDoLineBody>
-      <div className={cn('todo-body', { reset: isEdit, })} >
+      <div className={cn('todo-body')} >
         <input
           className={cn('todo-body__checkbox', {
-            hippen: isEdit,
           })}
           type='checkbox'
           checked={props.todo.isCompleted}
@@ -48,14 +40,13 @@ const ToDoLine: React.FC<Props> = (props) => {
         <>
           <div
             className='todo-body__div-button'
-            // onDoubleClick={changeIsEdit}
             onClick={redirectToPageWithTodo}
           >
             <div
               className={cn('todo-body__div', {
                 completed: (props.todo.isCompleted),
               })}
-              onDoubleClick={changeIsEdit}>
+              >
               {props.todo.value}
             </div>
             <button

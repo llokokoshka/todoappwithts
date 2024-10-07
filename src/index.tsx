@@ -22,7 +22,6 @@ const router = createBrowserRouter([
   {
     path: "todo/:id",
     element: <TodosPage />,
-    // action: todoAction,
   }
 ]);
 
