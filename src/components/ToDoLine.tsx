@@ -24,7 +24,7 @@ const ToDoLine: React.FC<Props> = (props) => {
   const navigate = useNavigate()
 
   const redirectToPageWithTodo = () => {
-    navigate(`todo/${props.todo.id}`, { state: { data: props.todo } })
+    navigate(`todo/${props.todo.id}`)
   }
 
   return (

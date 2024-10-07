@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
 import { updateToDo, deleteToDo, updateDescription } from '../store/todosSlice';
@@ -13,6 +13,7 @@ export default function TodosPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  let { userId } = useParams();
   const todos: Todo = location.state?.data;
 
   const getTodos = useAppSelector((state: RootState) => state.todos.todos);
@@ -155,6 +156,10 @@ const BodyWrapper = styled.div`
     background-color: white;
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
+
+    @media screen and (max-width: 390px){
+      max-width: ${({ theme }) => theme.sizes.modile};
+    }
   }
   
   .main-container__mini-block{
@@ -175,6 +180,10 @@ const BodyWrapper = styled.div`
     width: ${({ theme }) => theme.sizes.shirt_dectop};   
      min-height: 39px;
     border: ${({ theme }) => theme.border.grey} ;
+
+    @media screen and (max-width: 390px){
+      max-width: ${({ theme }) => theme.sizes.modile};
+    }
   }
 
   .main-container__button-div{
@@ -204,6 +213,9 @@ const BodyWrapper = styled.div`
     height: 39px;
     padding-left: 7px;
 
+    @media screen and (max-width: 390px){
+      max-width: ${({ theme }) => theme.sizes.modile};
+    }
   }
 
   .main-container__update-input:focus {
@@ -213,10 +225,14 @@ const BodyWrapper = styled.div`
 
   .main-container__textarea{
     border: ${({ theme }) => theme.border.grey} ;
-    min-width: 300px;
+    width: 300px;
     min-height: 100px;
     padding: 7px;
     resize: none;
+
+    @media screen and (max-width: 390px){
+      max-width: ${({ theme }) => theme.sizes.modile};
+    }
   }
   .main-container__textarea:focus{
     outline: none;

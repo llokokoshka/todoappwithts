@@ -17,7 +17,7 @@ const todosSlice = createSlice({
         return {
           payload: {
             value: data,
-            id: Math.random(),
+            id: Date.now(),
           }
         }
       },
